@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kisah Kita</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:Segoe UI,sans-serif;
+background:linear-gradient(180deg,#0f0f1a,#1c1c2e);
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+/* ===== BACKGROUND ===== */
+.stars,.hearts{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:80px;
+background:linear-gradient(-45deg,#fff,transparent);
+opacity:.6;
+animation:float 6s linear infinite;
+}
+
+.heart-bg{
+position:absolute;
+color:pink;
+font-size:18px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-40px);}
+100%{transform:translateY(0);}
+}
+
+/* ===== OPENING ===== */
+#opening{
+position:fixed;
+width:100%;
+height:100vh;
+background:inherit;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+z-index:10;
+transition:.8s;
+padding:20px;
+}
+
+#enterBtn{
+padding:12px 28px;
+border:none;
+background:#ff6fa5;
+border-radius:30px;
+color:white;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* ===== SECTION ===== */
+section{
+padding:80px 20px;
+text-align:center;
+}
+
+.gallery,.videos{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.gallery img,
+.videos video{
+width:250px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,.5);
+opacity:0;
+transform:translateY(40px);
+transition:.8s ease;
+}
+
+.show{
+opacity:1 !important;
+transform:translateY(0) !important;
+}
+
+.message{
+max-width:700px;
+margin:auto;
+line-height:1.8;
+font-size:18px;
+}
+
+/* ===== GAME BUTTON ===== */
+.gameSection button{
+padding:20px;
+font-size:30px;
+border:none;
+border-radius:50%;
+background:#ff4f8b;
+color:white;
+cursor:pointer;
+}
+
+/* animasi love */
+@keyframes fall{
+from{transform:translateY(0);opacity:1;}
+to{transform:translateY(800px);opacity:0;}
+}
+
+@keyframes pop{
+0%{transform:scale(0);opacity:0;}
+50%{transform:scale(1.5);opacity:1;}
+100%{transform:scale(1);opacity:0;}
+}
+
+/* ===== CONTROL ===== */
+.controls{
+position:fixed;
+bottom:20px;
+right:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.controls button{
+padding:10px;
+border:none;
+border-radius:50%;
+background:#ff6fa5;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="hearts" id="hearts"></div>
+
+<!-- OPENING -->
+<div id="opening">
+<h1>Kenangan Kita ✨</h1>
+<div id="typedText"></div>
+<button id="enterBtn">Klik Untuk Masuk</button>
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+<source src="musik.mp3" type="audio/mpeg">
+</audio>
+
+<div class="controls">
+<button onclick="toggleMusic()">🔊</button>
+<button onclick="toggleFullscreen()">⛶</button>
+</div>
+
+<!-- FOTO -->
+<section>
+<h2>Foto Kita</h2>
+<div class="gallery">
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+<img src="foto4.jpg">
+<img src="foto5.jpg">
+<img src="foto6.jpg">
+<img src="foto7.jpg">
+<img src="foto8.jpg">
+<img src="foto9.jpg">
+<img src="foto10.jpg">
+</div>
+<button onclick="document.getElementById('video').scrollIntoView({behavior:'smooth'})"
+style="margin-top:25px;padding:10px 20px;background:#ff6fa5;border:none;border-radius:20px;color:white;">
+Lanjut ke Video
+</button>
+</section>
+
+<!-- VIDEO -->
+<section id="video">
+<h2>Video Kenangan</h2>
+<div class="videos">
+<video src="video1.mp4" controls></video>
+<video src="video2.mp4" controls></video>
+<video src="video3.mp4" controls></video>
+<video src="video4.mp4" controls></video>
+<video src="video5.mp4" controls></video>
+<video src="video6.mp4" controls></video>
+<video src="video7.mp4" controls></video>
+<video src="video8.mp4" controls></video>
+<video src="video9.mp4" controls></video>
+<video src="video10.mp4" controls></video>
+</div>
+</section>
+
+<!-- PESAN -->
+<section>
+<h2>Untuk Kamu…</h2>
+<div class="message">
+Maaf kalau aku pernah kurang dalam menjaga perasaan dan janji.  
+Tapi semua yang aku buat di sini adalah bukti bahwa aku serius dan tulus.
+
+Aku gak sempurna.  
+Tapi aku selalu berusaha jadi lebih baik untuk kamu.
+
+Semoga buku ini jadi awal dari banyak kenangan indah.
+</div>
+</section>
+
+<!-- MINI GAME -->
+<section class="gameSection">
+<h2>Mini Game ❤️</h2>
+<p>Klik Seng hihi 🥰</p>
+<button onclick="startGame()">❤️</button>
+</section>
+
+<footer style="text-align:center;padding:40px;opacity:.6;">
+Dibuat dengan hati 🤍
+</footer>
+
+<script>
+
+/* ===== OPENING ===== */
+const btn=document.getElementById("enterBtn");
+const opening=document.getElementById("opening");
+const music=document.getElementById("bgMusic");
+
+btn.onclick=()=>{
+opening.style.opacity="0";
+setTimeout(()=>opening.style.display="none",800);
+music.play().catch(()=>{});
+};
+
+/* ===== TYPE EFFECT ===== */
+const typed=document.getElementById("typedText");
+const text=" ini lanjutannya seng, maaf yaa telat nya lama, sekarang buka yaa seng hihi";
+let i=0;
+
+function typeWriter(){
+if(i<text.length){
+typed.innerHTML+=text.charAt(i);
+i++;
+setTimeout(typeWriter,40);
+}
+}
+typeWriter();
+
+/* ===== MUSIC ===== */
+function toggleMusic(){
+music.paused?music.play():music.pause();
+}
+
+function toggleFullscreen(){
+!document.fullscreenElement?
+document.documentElement.requestFullscreen():
+document.exitFullscreen();
+}
+
+/* ===== SCROLL ANIMATION ===== */
+const elements=document.querySelectorAll("img,video");
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{threshold:0.2});
+
+elements.forEach(el=>observer.observe(el));
+
+/* ===== EFFECTS ===== */
+const stars=document.getElementById("stars");
+const hearts=document.getElementById("hearts");
+
+function createStar(){
+const star=document.createElement("div");
+star.classList.add("star");
+star.style.top=Math.random()*window.innerHeight+"px";
+star.style.left=Math.random()*window.innerWidth+"px";
+stars.appendChild(star);
+setTimeout(()=>star.remove(),6000);
+}
+setInterval(createStar,1000);
+
+function createHeartBG(){
+const heart=document.createElement("div");
+heart.classList.add("heart-bg");
+heart.innerHTML="❤";
+heart.style.top=Math.random()*window.innerHeight+"px";
+heart.style.left=Math.random()*window.innerWidth+"px";
+hearts.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeartBG,2000);
+
+/* ===== MINI GAME ===== */
+function startGame(){
+
+for(let i=0;i<50;i++){
+createLove();
+}
+
+for(let i=0;i<15;i++){
+createGift();
+}
+
+}
+
+function createLove(){
+const love=document.createElement("div");
+love.innerHTML="❤️";
+love.style.position="fixed";
+love.style.left=Math.random()*window.innerWidth+"px";
+love.style.top="-50px";
+love.style.fontSize="20px";
+love.style.animation="fall 3s linear forwards";
+document.body.appendChild(love);
+setTimeout(()=>love.remove(),3000);
+}
+
+function createGift(){
+const gift=document.createElement("div");
+gift.innerHTML="🎁";
+gift.style.position="fixed";
+gift.style.left=Math.random()*window.innerWidth+"px";
+gift.style.top="50%";
+gift.style.fontSize="40px";
+gift.style.animation="pop 2s ease forwards";
+document.body.appendChild(gift);
+setTimeout(()=>gift.remove(),2000);
+}
+
+</script>
+
+</body>
+</html>
