@@ -152,7 +152,31 @@ font-weight:bold;
 </style>
 </head>
 <body>
+  
+<script>
+const passwordBenar = "31082025";
+const input = prompt("Masukkan Password:");
 
+if (input !== passwordBenar) {
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#0f0f1a;
+      color:white;
+      font-family:sans-serif;
+      text-align:center;
+    ">
+      <div>
+        <h2>Akses Ditolak ❌</h2>
+        <p>Password salah.</p>
+      </div>
+    </div>
+  `;
+}
+</script>
 <div class="stars" id="stars"></div>
 <div class="hearts" id="hearts"></div>
 
